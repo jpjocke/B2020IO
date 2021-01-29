@@ -1,6 +1,8 @@
 package org.ben.model;
 
-public class PopularBrand {
+import org.ben.util.Printable;
+
+public class PopularBrand implements Printable {
     private final String name;
     private final String brand;
     private int count;
@@ -28,11 +30,7 @@ public class PopularBrand {
     }
 
     @Override
-    public String toString() {
-        return "PopularBrand{" +
-                "name='" + name + '\'' +
-                ", brand='" + brand + '\'' +
-                ", count=" + count +
-                '}';
+    public String toPrint() {
+        return name + "," + brand;
     }
 }

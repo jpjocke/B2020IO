@@ -3,23 +3,26 @@ package org.ben;
 import org.ben.model.Average;
 import org.ben.model.Order;
 import org.ben.model.OrderFactory;
-import org.ben.util.ReadFile;
+import org.ben.model.PopularBrand;
+import org.ben.util.FileHelper;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) {
-        //String fileName = "./resources/input_example.csv";
-        String fileName = "./resources/order_log00.csv";
-        List<String> rawOrders = ReadFile.readFileAsStringsPerLine(fileName);
+        String fileName = "input_example.csv";
+        //String fileName = "order_log00.csv";
+        String filePath = "./resources/" + fileName;
+        List<String> rawOrders = FileHelper.readFileAsStringsPerLine(filePath);
         List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
 
         Calculator calculator = new Calculator(orders);
         List<Average> averages = calculator.calculateAverageProduct();
+        List<PopularBrand> popularBrands = calculator.calculatePopularBrand();
 
-        calculator.calculatePopularBrand();
-
-        System.out.println(orders.get(0).getName());
+        FileHelper.printToFile("0_" + fileName, averages);
+        FileHelper.printToFile("1_" + fileName, popularBrands);
     }
 }

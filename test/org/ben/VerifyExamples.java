@@ -4,7 +4,7 @@ import org.ben.model.Average;
 import org.ben.model.Order;
 import org.ben.model.OrderFactory;
 import org.ben.model.PopularBrand;
-import org.ben.util.ReadFile;
+import org.ben.util.FileHelper;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class VerifyExamples {
 
     @Test
     public void givenExample1ThenAverageIsCorrect(){
-        List<String> rawOrders = ReadFile.readFileAsStringsPerLine(EXAMPLE_ONE_FILEPATH);
+        List<String> rawOrders = FileHelper.readFileAsStringsPerLine(EXAMPLE_ONE_FILEPATH);
         List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
 
         Calculator calculator = new Calculator(orders);
@@ -29,7 +29,7 @@ public class VerifyExamples {
 
     @Test
     public void givenExample1ThenPopularIsCorrect(){
-        List<String> rawOrders = ReadFile.readFileAsStringsPerLine(EXAMPLE_ONE_FILEPATH);
+        List<String> rawOrders = FileHelper.readFileAsStringsPerLine(EXAMPLE_ONE_FILEPATH);
         List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
 
         Calculator calculator = new Calculator(orders);
@@ -41,7 +41,7 @@ public class VerifyExamples {
 
     @Test
     public void givenExample2ThenAverageIsCorrect(){
-        List<String> rawOrders = ReadFile.readFileAsStringsPerLine(EXAMPLE_TWO_FILEPATH);
+        List<String> rawOrders = FileHelper.readFileAsStringsPerLine(EXAMPLE_TWO_FILEPATH);
         List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
 
         Calculator calculator = new Calculator(orders);
@@ -53,7 +53,7 @@ public class VerifyExamples {
 
     @Test
     public void givenExample2ThenPopularIsCorrect(){
-        List<String> rawOrders = ReadFile.readFileAsStringsPerLine(EXAMPLE_TWO_FILEPATH);
+        List<String> rawOrders = FileHelper.readFileAsStringsPerLine(EXAMPLE_TWO_FILEPATH);
         List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
 
         Calculator calculator = new Calculator(orders);

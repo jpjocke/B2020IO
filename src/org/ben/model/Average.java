@@ -1,6 +1,8 @@
 package org.ben.model;
 
-public class Average {
+import org.ben.util.Printable;
+
+public class Average implements Printable {
     private final String name;
     private final double quantity;
 
@@ -18,7 +20,7 @@ public class Average {
     }
 
     @Override
-    public String toString() {
+    public String toPrint() {
         return name + ',' + quantity;
     }
 }
