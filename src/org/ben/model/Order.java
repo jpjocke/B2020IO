@@ -34,4 +34,15 @@ public class Order {
     public String getBrand() {
         return brand;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", area='" + area + '\'' +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", brand='" + brand + '\'' +
+                '}';
+    }
 }
