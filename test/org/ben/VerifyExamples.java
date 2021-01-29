@@ -3,6 +3,7 @@ package org.ben;
 import org.ben.model.Average;
 import org.ben.model.Order;
 import org.ben.model.OrderFactory;
+import org.ben.model.PopularBrand;
 import org.ben.util.ReadFile;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class VerifyExamples {
     @Test
     public void givenExample1ThenAverageIsCorrect(){
         List<String> rawOrders = ReadFile.readFileAsStringsPerLine(EXAMPLE_ONE_FILEPATH);
-        List<Order> orders = rawOrders.stream().map(order -> OrderFactory.fromFileString(order)).collect(Collectors.toList());
+        List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
 
         Calculator calculator = new Calculator(orders);
         List<Average> averages = calculator.calculateAverageProduct();
@@ -27,14 +28,38 @@ public class VerifyExamples {
     }
 
     @Test
+    public void givenExample1ThenPopularIsCorrect(){
+        List<String> rawOrders = ReadFile.readFileAsStringsPerLine(EXAMPLE_ONE_FILEPATH);
+        List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
+
+        Calculator calculator = new Calculator(orders);
+        List<PopularBrand> popularList = calculator.calculatePopularBrand();
+        Assert.assertEquals(2, popularList.size());
+        Assert.assertEquals("Air", popularList.stream().filter(popular -> popular.getName().equals("shoes")).collect(Collectors.toList()).get(0).getBrand());
+        Assert.assertEquals("Pfitzcraft", popularList.stream().filter(average -> average.getName().equals("forks")).collect(Collectors.toList()).get(0).getBrand());
+    }
+
+    @Test
     public void givenExample2ThenAverageIsCorrect(){
         List<String> rawOrders = ReadFile.readFileAsStringsPerLine(EXAMPLE_TWO_FILEPATH);
-        List<Order> orders = rawOrders.stream().map(order -> OrderFactory.fromFileString(order)).collect(Collectors.toList());
+        List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
 
         Calculator calculator = new Calculator(orders);
         List<Average> averages = calculator.calculateAverageProduct();
         Assert.assertEquals(2, averages.size());
         Assert.assertEquals(2.4, averages.stream().filter(average -> average.getName().equals("Intelligent Copper Knife")).collect(Collectors.toList()).get(0).getQuantity(), 0);
         Assert.assertEquals(0.8, averages.stream().filter(average -> average.getName().equals("Small Granite Shoes")).collect(Collectors.toList()).get(0).getQuantity(), 0);
+    }
+
+    @Test
+    public void givenExample2ThenPopularIsCorrect(){
+        List<String> rawOrders = ReadFile.readFileAsStringsPerLine(EXAMPLE_TWO_FILEPATH);
+        List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
+
+        Calculator calculator = new Calculator(orders);
+        List<PopularBrand> popularList = calculator.calculatePopularBrand();
+        Assert.assertEquals(2, popularList.size());
+        Assert.assertEquals("Hilll-Gorczany", popularList.stream().filter(popular -> popular.getName().equals("Intelligent Copper Knife")).collect(Collectors.toList()).get(0).getBrand());
+        Assert.assertEquals("Rowe and Legros", popularList.stream().filter(average -> average.getName().equals("Small Granite Shoes")).collect(Collectors.toList()).get(0).getBrand());
     }
 }

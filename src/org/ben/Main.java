@@ -1,5 +1,6 @@
 package org.ben;
 
+import org.ben.model.Average;
 import org.ben.model.Order;
 import org.ben.model.OrderFactory;
 import org.ben.util.ReadFile;
@@ -9,9 +10,15 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) {
-        List<String> rawOrders = ReadFile.readFileAsStringsPerLine("./resources/input_example.csv");
-        List<Order> orders = rawOrders.stream().map(order -> OrderFactory.fromFileString(order)).collect(Collectors.toList());
+        //String fileName = "./resources/input_example.csv";
+        String fileName = "./resources/order_log00.csv";
+        List<String> rawOrders = ReadFile.readFileAsStringsPerLine(fileName);
+        List<Order> orders = rawOrders.stream().map(OrderFactory::fromFileString).collect(Collectors.toList());
 
+        Calculator calculator = new Calculator(orders);
+        List<Average> averages = calculator.calculateAverageProduct();
+
+        calculator.calculatePopularBrand();
 
         System.out.println(orders.get(0).getName());
     }
